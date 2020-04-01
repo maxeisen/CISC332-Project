@@ -1,0 +1,13 @@
+h1 {
+font-family: sans-serif;
+color: #0f32bd;
+}
+
+p {
+font-family: sans-serif;
+color: #ababab;
+}
+
+table, th, td {
+border: 1px solid black;
+}
