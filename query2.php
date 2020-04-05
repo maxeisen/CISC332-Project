@@ -1,0 +1,1 @@
+# Query 2: For a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)

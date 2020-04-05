@@ -1,0 +1,1 @@
+# Query 3: Show the total amount donated for 2018 to a selected organization

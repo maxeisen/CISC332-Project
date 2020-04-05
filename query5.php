@@ -1,0 +1,1 @@
+# Query 5: Show how many animals were rescued during 2018 (by any rescue organization)

@@ -1,11 +1,11 @@
--- show all the information for all drivers associated with a particular rescue organization
+-- Q1: show all the information for all drivers associated with a particular rescue organization
 
 SELECT *
 FROM Driver
 WHERE rescueOrgID = $rescueOrganizationID
 
 
--- for a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)
+-- Q2: for a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)
 
 SELECT
 	organizationName,
@@ -15,7 +15,7 @@ WHERE orgPhoneNumber = phoneNumber AND (donorFirstName = $firstName AND donorLas
 GROUP BY orgPhoneNumber
 
 
--- show the total amount donated for 2018 to a selected organization
+-- Q3: show the total amount donated for 2018 to a selected organization
 
 SELECT
 	organizationName,
@@ -25,7 +25,7 @@ WHERE organizationName = $orgName AND orgPhoneNumber = phoneNumber AND year(date
 group by orgPhoneNumber
 
 
---show the animals that went from the SPCA directly to a shelter (ie. they did not go through the rescue organization)
+-- Q4: show the animals that went from the SPCA directly to a shelter (ie. they did not go through the rescue organization)
 
 SELECT
 	animalID,
@@ -36,7 +36,7 @@ WHERE (origin IN (SELECT phoneNumber FROM spcaBranch))
 AND (destination IN (SELECT phoneNumber FROM shelter))
 
 
--- show how many animals were rescued during 2018 (by any rescue organization)
+-- Q5: show how many animals were rescued during 2018 (by any rescue organization)
 
 SELECT
 	animalID,

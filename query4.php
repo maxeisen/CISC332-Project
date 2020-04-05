@@ -1,0 +1,1 @@
+# Query 4: Show the animals that went from the SPCA directly to a shelter (ie. they did not go through the rescue organization)
