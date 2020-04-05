@@ -8,6 +8,9 @@
 
 <h1>Hello, friend.</h1>
 <p>Hi there. Welcome to Animal Rescue, bitch!</p>
+<body>
+<h1> Max hates me </h1>
+</body>
 
 <table>
 <tr><th>Number of Animals</th></tr>
