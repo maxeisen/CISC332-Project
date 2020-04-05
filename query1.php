@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>Number of Animals</h1>
+<h1>Query 1: Drivers</h1>
 
 <table>
 
@@ -21,14 +21,18 @@ $password="";
 
 $dbh = new PDO("mysql:host=$hostname;dbname=$db", $username, $password); 
 
+$rescueOrganizationID=$_POST["rescueOrganizationID"];
 
-#Show how many animals were rescued during 2018 (by any rescue organization)
-$rows = $dbh->query("SELECT count(animalID) FROM animalTransport WHERE destination IN (SELECT phoneNumber FROM rescueOrganization) AND year(transportDate) = 2018");
+$sqlQuery="SELECT * FROM Driver WHERE rescueOrgID = $rescueOrganizationID";
 
-echo "<h2>2018 Animals</h2>";
+#Show all the information for all drivers associated with a particular rescue organization
+$result = $dbh->query($sqlQuery);
 
-foreach ($rows as $row) {
-	echo "<tr><td>".$row[0]."</td></tr>";
+echo "<h2>All drivers for rescue organization ".$rescueOrganizationID."</h2>";
+echo "<tr><th>First Name</th><th>Last Name</th><th>Phone Number</th><th>Plate Number</th><th>License Number</th></tr>";
+
+foreach ($result as $row) {
+    echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
 }
 $dbh = null
 
