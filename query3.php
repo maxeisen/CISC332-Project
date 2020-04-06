@@ -11,7 +11,7 @@
 <?php
 
 $hostname="localhost";
-$db="SaveTheAnimalsP1Final"; #Change to your database name
+$db="MAHAnimalServices"; #Must be MAHAnimalServices
 $username="root";
 $password="";
 
@@ -24,8 +24,8 @@ $sqlQuery="SELECT SUM(valueDonated), organizationName FROM donatesTo JOIN organi
 #Show the total amount donated for 2018 to a selected organization
 $result = $dbh->query($sqlQuery);
 
-if ($result->rowCount() < 1) {
-    echo "<h2>No results found.</h2>";
+if (!$result || $result->rowCount() < 1) {
+    echo "<br><h2>No results found.</h2>";
 }
 
 if (is_array($result) || is_object($result)) {
@@ -40,9 +40,11 @@ $dbh = null
 
 <br>
 
-<a href="/cisc332-project">
-    <button>Back</button>
-</a>
+<div align="center">
+    <a href="/cisc332-project">
+        <button>Back</button>
+    </a>
+</div>
 
 </body>
 </html> 

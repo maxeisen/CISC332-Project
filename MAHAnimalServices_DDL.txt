@@ -1,0 +1,777 @@
+-- Disabling foreign key checks
+
+SET FOREIGN_KEY_CHECKS=0;
+
+
+-- Processing strong entities
+
+CREATE TABLE donor(
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
+    PRIMARY KEY(firstName, lastName)
+);
+
+CREATE TABLE employee(
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
+    address VARCHAR(40) NOT NULL,
+    worksAt VARCHAR(20) NOT NULL,
+    FOREIGN KEY(worksAt) REFERENCES organization(phoneNumber),
+    PRIMARY KEY(firstName, lastName)
+);
+
+CREATE TABLE driver(
+    firstName VARCHAR(20) NOT NULL,
+    lastName VARCHAR(20) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    plateNumber VARCHAR(8) NOT NULL UNIQUE,
+    licenseNumber VARCHAR(20) NOT NULL UNIQUE,
+    rescueOrgID VARCHAR(20) NOT NULL,
+    FOREIGN KEY(rescueOrgID) REFERENCES rescueOrganization(phoneNumber),
+    PRIMARY KEY(firstName, lastName)
+);
+
+CREATE TABLE animal(
+    uniqueID VARCHAR(20) NOT NULL UNIQUE,
+    animalType VARCHAR(10) NOT NULL,
+    dropOffBranch VARCHAR(10) NOT NULL,
+    PRIMARY KEY(uniqueID),
+    FOREIGN KEY(dropOffBranch) REFERENCES spcaBranch(phoneNumber)
+);
+
+CREATE TABLE adopter(
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    address VARCHAR(40) NOT NULL,
+    amountPaid INT NOT NULL,
+    familyName VARCHAR(20) NOT NULL,
+    animalID VARCHAR(20) NOT NULL UNIQUE,
+    PRIMARY KEY(phoneNumber),
+    FOREIGN KEY(animalID) REFERENCES animal(uniqueID)
+);
+
+
+-- Processing weak entities
+
+CREATE TABLE vetVisit(
+    vetFirstName VARCHAR(20) NOT NULL,
+    vetLastName VARCHAR(20) NOT NULL,
+    animalWeight INT NOT NULL,
+    animalID VARCHAR(20) NOT NULL UNIQUE,
+    reasonForVisit VARCHAR(100),
+    visitDate DATE NOT NULL,
+    PRIMARY KEY(visitDate, animalID),
+    FOREIGN KEY(animalID) REFERENCES animal(uniqueID) ON DELETE CASCADE
+);
+
+CREATE TABLE shelteredAnimal(
+    animalType VARCHAR(20) NOT NULL,
+    maxNumber INT NOT NULL,
+    associatedShelter VARCHAR(20) NOT NULL,
+    PRIMARY KEY(animalType, associatedShelter),
+    FOREIGN KEY(associatedShelter) REFERENCES shelter(phoneNumber)
+);
+
+CREATE TABLE animalTransport(
+    transportDate DATE NOT NULL,
+    paidToSPCA INT,
+    origin VARCHAR(20) NOT NULL,
+    destination VARCHAR(20) NOT NULL,
+    driverFirstName VARCHAR(20) NOT NULL,
+    driverLastName VARCHAR(20) NOT NULL,
+    animalID VARCHAR(20) NOT NULL,
+    PRIMARY KEY(animalID, transportDate),
+    FOREIGN KEY(animalID) REFERENCES animal(uniqueID),
+    FOREIGN KEY(
+        driverFirstName,
+        driverLastName
+    ) REFERENCES driver(firstName, lastName),
+    FOREIGN KEY(origin) REFERENCES organization(phoneNumber),
+    FOREIGN KEY(destination) REFERENCES organization(phoneNumber)
+);
+
+
+-- Processing many to many (N:M) relationships
+
+CREATE TABLE donatesTo(
+    donorFirstName VARCHAR(20) NOT NULL,
+    donorLastName VARCHAR(20) NOT NULL,
+    orgPhoneNumber VARCHAR(20) NOT NULL,
+    dateDonated DATE NOT NULL,
+    valueDonated FLOAT NOT NULL,
+    PRIMARY KEY(
+        donorFirstName,
+        donorLastName,
+        orgPhoneNumber,
+        dateDonated
+    ),
+    FOREIGN KEY(donorFirstName, donorLastName) REFERENCES donor(firstName, lastName),
+    FOREIGN KEY(orgPhoneNumber) REFERENCES organization(phoneNumber)
+);
+
+
+-- Processing multi-valued attributes
+
+CREATE TABLE phoneNumber(
+    employeeFirstName VARCHAR(20) NOT NULL,
+    employeeLastName VARCHAR(20) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    phoneNumType VARCHAR(10) NOT NULL,
+    PRIMARY KEY(
+        employeeFirstName,
+        employeeLastName,
+        phoneNumber
+    ),
+    FOREIGN KEY(
+        employeeFirstName,
+        employeeLastName
+    ) REFERENCES employee(firstName, lastName)
+);
+
+
+-- Processing specializations
+
+CREATE TABLE organization(
+    organizationName VARCHAR(20) NOT NULL,
+    address VARCHAR(40) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    PRIMARY KEY(phoneNumber)
+);
+
+CREATE TABLE rescueOrganization(
+    ownerFirstName VARCHAR(20),
+    ownerLastName VARCHAR(20),
+    phoneNumber VARCHAR(20),
+    PRIMARY KEY(phoneNumber),
+    FOREIGN KEY(phoneNumber) REFERENCES organization(phoneNumber),
+    FOREIGN KEY(ownerFirstName, ownerLastName) REFERENCES employee(firstName, lastName)
+);
+
+CREATE TABLE spcaBranch(
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    managerFirstName VARCHAR(20),
+    managerLastName VARCHAR(20),
+    PRIMARY KEY(phoneNumber),
+    FOREIGN KEY(phoneNumber) REFERENCES organization(phoneNumber),
+    FOREIGN KEY(
+        managerFirstName,
+        managerLastName
+    ) REFERENCES employee(firstName, lastName)
+);
+
+CREATE TABLE shelter(
+    phoneNumber VARCHAR(20) NOT NULL UNIQUE,
+    ownerFirstName VARCHAR(20),
+    ownerLastName VARCHAR(20),
+    websiteURL VARCHAR(20),
+    FOREIGN KEY(phoneNumber) REFERENCES organization(phoneNumber),
+    FOREIGN KEY(ownerFirstName, ownerLastName) REFERENCES employee(firstName, lastName)
+);
+
+
+-- Re-enabling foreign key checks
+
+SET FOREIGN_KEY_CHECKS=1;
+
+
+-- Inserting sample organization data
+
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "Bob’s Rescue",
+    "69 Kingston Road",
+    "4031112222"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "Kent SPCA",
+    "3 Main Street",
+    "4032223333"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "We Shelt Hard",
+    "23 Lane’s Lane",
+    "4033334444"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "ShelterLand",
+    "50 Testing Street",
+    "4033333131"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "Mayer of RescueTown",
+    "200 Unit Street",
+    "4031122323"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "Ain’t No Care",
+    "103 Ton Road",
+    "4031112223"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "Shiz SPCA",
+    "3 Main Street",
+    "4032224444"
+);
+INSERT INTO organization(
+    organizationName,
+    address,
+    phoneNumber
+)
+VALUES(
+    "We Shelt Hard",
+    "2 Britane Avenue",
+    "4033334445"
+);
+
+
+-- Inserting sample employee data
+
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Bob",
+    "Hope",
+    "3 Forty Lane",
+    "4031112222"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Robert",
+    "Frost",
+    "33 Ruty Lane",
+    "4032223333"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Ken",
+    "Hope",
+    "3 Strictly Straight Street",
+    "4033334444"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Imatilda",
+    "Orhyphen",
+    "1 Lovely Loopy Lane",
+    "4031112223"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Chad",
+    "Frankell",
+    "23 R Road",
+    "4032224444"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Michaela",
+    "Hawk",
+    "3 Foruty Lane",
+    "4033334445"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Weir",
+    "Testing",
+    "28 Testing Street",
+    "4033333131"
+);
+INSERT INTO employee(
+    firstName,
+    lastName,
+    address,
+    worksAt
+)
+VALUES(
+    "Mayer",
+    "Mayerovich",
+    "14 Unit Street",
+    "4031122323"
+);
+
+
+-- Inserting sample rescueOrganization data
+
+INSERT INTO rescueOrganization(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Bob", "Hope", "4031112222");
+INSERT INTO rescueOrganization(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Imatilda", "Orhyphen", "4031112223");
+INSERT INTO rescueOrganization(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Mayer", "Mayerovich", "4031122323");
+
+
+-- Inserting sample spcaBranch data
+
+INSERT INTO spcaBranch(
+    managerFirstName,
+    managerLastName,
+    phoneNumber
+)
+VALUES("Robert", "Frost", "4032223333");
+INSERT INTO spcaBranch(
+    managerFirstName,
+    managerLastName,
+    phoneNumber
+)
+VALUES("Chad", "Frankell", "4032224444");
+
+
+-- Inserting sample shelter data
+
+INSERT INTO shelter(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Ken", "Hope", "4033334444");
+INSERT INTO shelter(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Michaela", "Hawk", "4033334445");
+INSERT INTO shelter(
+    ownerFirstName,
+    ownerLastName,
+    phoneNumber
+)
+VALUES("Weir", "Testing", "4033333131");
+
+
+-- Inserting sample driver data
+
+INSERT INTO driver(
+    firstName,
+    lastName,
+    phoneNumber,
+    plateNumber,
+    licenseNumber,
+    rescueOrgID
+)
+VALUES(
+    "D.",
+    "River",
+    "2342422424",
+    "222kkk12",
+    "10102313",
+    "4031112223"
+);
+INSERT INTO driver(
+    firstName,
+    lastName,
+    phoneNumber,
+    plateNumber,
+    licenseNumber,
+    rescueOrgID
+)
+VALUES(
+    "Dr",
+    "Iver",
+    "2341422424",
+    "222Jkk12",
+    "1010233",
+    "4031112223"
+);
+INSERT INTO driver(
+    firstName,
+    lastName,
+    phoneNumber,
+    plateNumber,
+    licenseNumber,
+    rescueOrgID
+)
+VALUES(
+    "Mr",
+    "Driverson",
+    "02348203939",
+    "000ks0dl",
+    "1045932",
+    "4031122323"
+);
+INSERT INTO driver(
+    firstName,
+    lastName,
+    phoneNumber,
+    plateNumber,
+    licenseNumber,
+    rescueOrgID
+)
+VALUES(
+    "SonOfA",
+    "Driver",
+    "1208433282",
+    "drverman",
+    "4532675",
+    "4031122323"
+);
+
+
+-- Inserting sample donor data
+
+INSERT INTO donor(firstName, lastName)
+VALUES("Fut", "Ton");
+INSERT INTO donor(firstName, lastName)
+VALUES("Yolanda", "Bakfat");
+INSERT INTO donor(firstName, lastName)
+VALUES("Donor", "Man");
+INSERT INTO donor(firstName, lastName)
+VALUES("Mister", "Donair");
+
+-- Inserting sample animal data
+
+INSERT INTO animal(
+    uniqueID,
+    animalType,
+    dropOffBranch
+)
+VALUES("FFFHHFU3HH4", "Dog", "4032223333");
+INSERT INTO animal(
+    uniqueID,
+    animalType,
+    dropOffBranch
+)
+VALUES("FFFHHFU3HH5", "Cat", "4032223333");
+INSERT INTO animal(
+    uniqueID,
+    animalType,
+    dropOffBranch
+)
+VALUES("FFFHHFU3HH6", "Bird", "4032223333");
+INSERT INTO animal(
+    uniqueID,
+    animalType,
+    dropOffBranch
+)
+VALUES("FFFHHFU3HH7", "Dog", "4032224444");
+INSERT INTO animal(
+    uniqueID,
+    animalType,
+    dropOffBranch
+)
+VALUES("FFFHHFU3HH8", "Cat", "4032224444");
+
+
+-- Inserting sample animalTransport data
+
+INSERT INTO animalTransport(
+    transportDate,
+    paidToSPCA,
+    origin,
+    destination,
+    driverFirstName,
+    driverLastName,
+    animalID
+)
+VALUES(
+    '2010-12-12',
+    1200,
+    "4032224444",
+    "4033334445",
+    "D.",
+    "River",
+    "FFFHHFU3HH4"
+);
+INSERT INTO animalTransport(
+    transportDate,
+    paidToSPCA,
+    origin,
+    destination,
+    driverFirstName,
+    driverLastName,
+    animalID
+)
+VALUES(
+    '2018-12-12',
+    500,
+    "4032223333",
+    "4033333131",
+    "Mr",
+    "Driverson",
+    "FFFHHFU3HH6"
+);
+INSERT INTO animalTransport(
+    transportDate,
+    paidToSPCA,
+    origin,
+    destination,
+    driverFirstName,
+    driverLastName,
+    animalID
+)
+VALUES(
+    '2018-02-06',
+    840,
+    "4032224444",
+    "4033334444",
+    "Mr",
+    "Driverson",
+    "FFFHHFU3HH7"
+);
+INSERT INTO animalTransport(
+    transportDate,
+    paidToSPCA,
+    origin,
+    destination,
+    driverFirstName,
+    driverLastName,
+    animalID
+)
+VALUES(
+    '2018-02-06',
+    1200,
+    "4032223333",
+    "4033334444",
+    "Dr",
+    "Iver",
+    "FFFHHFU3HH8"
+);
+INSERT INTO animalTransport(
+    transportDate,
+    paidToSPCA,
+    origin,
+    destination,
+    driverFirstName,
+    driverLastName,
+    animalID
+)
+VALUES(
+    '2018-04-07',
+    0,
+    "4033334444",
+    "4031122323",
+    "SonOfA",
+    "Driver",
+    "FFFHHFU3HH8"
+);
+
+
+-- Inserting sample donatesTo data
+
+INSERT INTO donatesTo(
+    donorFirstName,
+    donorLastName,
+    orgPhoneNumber,
+    dateDonated,
+    valueDonated
+)
+VALUES(
+    "Fut",
+    "Ton",
+    "4032224444",
+    '2019-10-21',
+    23000
+);
+INSERT INTO donatesTo(
+    donorFirstName,
+    donorLastName,
+    orgPhoneNumber,
+    dateDonated,
+    valueDonated
+)
+VALUES(
+    "Yolanda",
+    "Bakfat",
+    "4033334444",
+    '2018-02-12',
+    8400
+);
+INSERT INTO donatesTo(
+    donorFirstName,
+    donorLastName,
+    orgPhoneNumber,
+    dateDonated,
+    valueDonated
+)
+VALUES(
+    "Yolanda",
+    "Bakfat",
+    "4033334444",
+    '2018-08-12',
+    9000
+);
+INSERT INTO donatesTo(
+    donorFirstName,
+    donorLastName,
+    orgPhoneNumber,
+    dateDonated,
+    valueDonated
+)
+VALUES(
+    "Mister",
+    "Donair",
+    "4033334444",
+    '2018-06-10',
+    12000
+);
+INSERT INTO donatesTo(
+    donorFirstName,
+    donorLastName,
+    orgPhoneNumber,
+    dateDonated,
+    valueDonated
+)
+VALUES(
+    "Mister",
+    "Donair",
+    "4031122323",
+    '2018-08-09',
+    3500
+);
+
+
+
+-- Inserting sample phoneNumber data
+
+INSERT INTO phoneNumber(
+    employeeFirstName,
+    employeeLastName,
+    phoneNumber,
+    phoneNumType
+)
+VALUES(
+    "Robert",
+    "Frost",
+    "1233211234",
+    "Mobile"
+);
+
+
+-- Inserting sample shelteredAnimal data
+
+INSERT INTO shelteredAnimal(
+    animalType,
+    maxNumber,
+    associatedShelter
+)
+VALUES("Dog", 232, "4033334445");
+
+
+-- Inserting sample adopter data
+
+INSERT INTO adopter(
+    phoneNumber,
+    address,
+    amountPaid,
+    familyName,
+    animalID
+)
+VALUES(
+    "6476239503",
+    "12 Home4animal st",
+    1000000,
+    "AnimalLovers",
+    "FFFHHFU3HH5"
+);
+INSERT INTO adopter(
+    phoneNumber,
+    address,
+    amountPaid,
+    familyName,
+    animalID
+)
+VALUES(
+    "6476239505",
+    "10 home4animal st",
+    1000001,
+    "AnimalH8rs",
+    "FFFHHFU3HH4"
+);
+
+
+-- Inserting sample vetVisit data
+
+INSERT INTO vetVisit(
+    vetFirstName,
+    vetLastName,
+    animalWeight,
+    animalID,
+    reasonForVisit,
+    visitDate
+)
+VALUES(
+    "Dr.",
+    "Epic-Dude",
+    68,
+    "FFFHHFU3HH4",
+    "Diabetes",
+    '2019-10-21'
+);

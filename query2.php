@@ -13,7 +13,7 @@
 <?php
 
 $hostname="localhost";
-$db="SaveTheAnimalsP1Final"; #Change to your database name
+$db="MAHAnimalServices"; #Must be MAHAnimalServices
 $username="root";
 $password="";
 
@@ -27,13 +27,12 @@ $sqlQuery="SELECT organizationName, SUM(valueDonated) FROM donatesTo JOIN organi
 #For a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)
 $result = $dbh->query($sqlQuery);
 
-echo "<h2>Donations Made by <resultValue>$firstName $lastName</resultValue></h2>";
-
-if ($result->rowCount() < 1) {
+if (!$result || $result->rowCount() < 1) {
     echo "<br><h2>No results found.</h2>";
 }
 
 else if (is_array($result) || is_object($result)) {
+    echo "<h2>Donations Made by <resultValue>$firstName $lastName</resultValue></h2>";
     echo "<tr><th>Organization Name</th><th>Total Amount Donated</th></tr>";
     foreach ($result as $row) {
         echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td></tr>";
@@ -47,9 +46,11 @@ $dbh = null
 </table>
 <br>
 
-<a href="/cisc332-project">
-    <button>Back</button>
-</a>
+<div align="center">
+    <a href="/cisc332-project">
+        <button>Back</button>
+    </a>
+</div>
 
 </body>
 </html> 

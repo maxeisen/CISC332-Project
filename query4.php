@@ -13,7 +13,7 @@
 <?php
 
 $hostname="localhost";
-$db="SaveTheAnimalsP1Final"; #Change to your database name
+$db="MAHAnimalServices"; #Must be MAHAnimalServices
 $username="root";
 $password="";
 
@@ -24,13 +24,12 @@ $sqlQuery="SELECT animalID, origin, destination FROM animalTransport WHERE (orig
 #Show the animals that went from the SPCA directly to a shelter (ie. they did not go through the rescue organization)
 $result = $dbh->query($sqlQuery);
 
-echo "<h2>Animals Transported From an SPCA Branch Directly to a Shelter</h2>";
-
 if ($result->rowCount() < 1) {
     echo "<br><h2>No results found.</h2>";
 }
 
-if (is_array($result) || is_object($result)) {
+else if (is_array($result) || is_object($result)) {
+    echo "<h2>Animals Transported From an SPCA Branch Directly to a Shelter</h2>";
     echo "<tr><th>Animal ID</th><th>Origin (SPCA)</th><th>Destination (Shelter)</th></tr>";
     foreach ($result as $row) {
         echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td></tr>";
@@ -43,9 +42,11 @@ $dbh = null
 </table>
 <br>
 
-<a href="/cisc332-project">
-    <button>Back</button>
-</a>
+<div align="center">
+    <a href="/cisc332-project">
+        <button>Back</button>
+    </a>
+</div>
 
 </body>
 </html> 

@@ -5,18 +5,21 @@ h1 {
 }
 
 h2 {
+    font-size: 23px;
     text-align: center;
     font-family: sans-serif;
     color: black;
 }
 
 h3 {
+    font-weight: normal;
     font-size: 15px;
     font-family: sans-serif;
-    color: black;
+    color: #444444;
 }
 
 p {
+    text-align: center;
     font-family: sans-serif;
     color: #ababab;
 }
@@ -45,7 +48,7 @@ r:nth-child(even) {
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     background-color: rgb(101, 181, 247);
     padding: 10px;
 }
@@ -76,12 +79,18 @@ input[type=submit]:hover, button:hover {
   }
 
 input[type=text] {
-    width: 100px;
-    height: 20px;
+    width: 130px;
+    height: 24px;
     font-size: 15px;
     border-radius: 5px;
 }
 
+::placeholder {
+    color: #ababab;
+    opacity: 0.8;
+  }
+
 img {
     width: 200px;
+    border-radius: 30px;
 }
