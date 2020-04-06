@@ -15,3 +15,13 @@ The demo will take user inputs through a CSS form for the queries that require u
 >No results found.
 
 if the result of any query is empty.
+
+## Instructions
+
+1. Download and install [XAMPP](https://www.apachefriends.org/download.html "Download XAMPP")
+2. Navigate to, and clone "cisc332-project" repository into *htdocs* folder
+3. Start XAMPP *MySQL Database* and *Apache Web Server*
+4. Create a new database called *MAHAnimalServices*
+5. Copy text contained in *MAHAnimalServices_DDL.txt* into the SQL query box
+6. Navigate to the [MAH Animal Services Website](http://localhost/cisc332-project)
+7. Profit.
