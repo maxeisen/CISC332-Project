@@ -3,15 +3,25 @@ font-family: sans-serif;
 color: #0f32bd;
 }
 
+h2 {
+    font-family: sans-serif;
+    color: black;
+}
+
+h3 {
+    font-family: sans-serif;
+    color: black;
+}
+
 p {
-font-family: sans-serif;
-color: #ababab;
+    font-family: sans-serif;
+    color: #ababab;
 }
 
 table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
-	width:100%;
+	width:50%;
 }
 
 td, th {
@@ -22,4 +32,39 @@ td, th {
 
 r:nth-child(even) {
 	background-color: #ababab;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+input[type=button], input[type=submit], input[type=reset], button {
+    background-color: #4CAF50;
+    border: 1px solid black;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+input[type=text] {
+    width: 100px;
+    height: 20px;
+    font-size: 15px;
+}
+
+img {
+    width: 200px;
 }
