@@ -1,5 +1,3 @@
-# Query 1: Show all the information for all drivers associated with a particular rescue organization
-
 <!DOCTYPE html>
 
 <html>
@@ -8,9 +6,7 @@
 </head>
 <body>
 
-<h1>Query 1: Drivers</h1>
-
-<table>
+<h1>Driver Information</h1>
 
 <?php
 
@@ -28,10 +24,14 @@ $sqlQuery="SELECT * FROM Driver WHERE rescueOrgID = $rescueOrganizationID";
 #Show all the information for all drivers associated with a particular rescue organization
 $result = $dbh->query($sqlQuery);
 
-echo "<h2>All Drivers for Rescue Organization $rescueOrganizationID</h2>";
-echo "<tr><th>First Name</th><th>Last Name</th><th>Phone Number</th><th>Plate Number</th><th>License Number</th></tr>";
+echo "<h2>All Drivers for Rescue Organization <resultValue>$rescueOrganizationID</resultValue></h2>";
 
-if (is_array($result) || is_object($result)) {
+if ($result->rowCount() < 1) {
+    echo "<br><h2>No results found.</h2>";
+}
+
+else if (is_array($result) || is_object($result)) {
+    echo "<tr><th>First Name</th><th>Last Name</th><th>Phone Number</th><th>Plate Number</th><th>License Number</th></tr>";
     foreach ($result as $row) {
         echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td></tr>";
     }

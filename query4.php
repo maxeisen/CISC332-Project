@@ -1,5 +1,3 @@
-# Query 4: Show the animals that went from the SPCA directly to a shelter (ie. they did not go through the rescue organization)
-
 <!DOCTYPE html>
 
 <html>
@@ -8,7 +6,7 @@
 </head>
 <body>
 
-<h1>Query 4: Direct Animals</h1>
+<h1>SPCA->Shelter Animals</h1>
 
 <table>
 
@@ -27,9 +25,13 @@ $sqlQuery="SELECT animalID, origin, destination FROM animalTransport WHERE (orig
 $result = $dbh->query($sqlQuery);
 
 echo "<h2>Animals Transported From an SPCA Branch Directly to a Shelter</h2>";
-echo "<tr><th>Animal ID</th><th>Origin (SPCA)</th><th>Destination (Shelter)</th></tr>";
+
+if ($result->rowCount() < 1) {
+    echo "<br><h2>No results found.</h2>";
+}
 
 if (is_array($result) || is_object($result)) {
+    echo "<tr><th>Animal ID</th><th>Origin (SPCA)</th><th>Destination (Shelter)</th></tr>";
     foreach ($result as $row) {
         echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td></tr>";
     }

@@ -1,5 +1,3 @@
-# Query 2: For a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)
-
 <!DOCTYPE html>
 
 <html>
@@ -8,7 +6,7 @@
 </head>
 <body>
 
-<h1>Query 2: Donors</h1>
+<h1>All Donations Made by Specific Donor</h1>
 
 <table>
 
@@ -29,10 +27,14 @@ $sqlQuery="SELECT organizationName, SUM(valueDonated) FROM donatesTo JOIN organi
 #For a particular donor, show which organizations they donated to and the total amount donated (over their lifetime)
 $result = $dbh->query($sqlQuery);
 
-echo "<h2>Donations Made by $firstName $lastName</h2>";
-echo "<tr><th>Organization Name</th><th>Total Amount Donated</th></tr>";
+echo "<h2>Donations Made by <resultValue>$firstName $lastName</resultValue></h2>";
 
-if (is_array($result) || is_object($result)) {
+if ($result->rowCount() < 1) {
+    echo "<br><h2>No results found.</h2>";
+}
+
+else if (is_array($result) || is_object($result)) {
+    echo "<tr><th>Organization Name</th><th>Total Amount Donated</th></tr>";
     foreach ($result as $row) {
         echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td></tr>";
     }

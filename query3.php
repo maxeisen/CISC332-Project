@@ -1,5 +1,3 @@
-# Query 3: Show the total amount donated for 2018 to a selected organization
-
 <!DOCTYPE html>
 
 <html>
@@ -8,7 +6,7 @@
 </head>
 <body>
 
-<h1>Query 3: Donations</h1>
+<h1>2018 Donations to Specific Organization</h1>
 
 <?php
 
@@ -26,9 +24,13 @@ $sqlQuery="SELECT SUM(valueDonated), organizationName FROM donatesTo JOIN organi
 #Show the total amount donated for 2018 to a selected organization
 $result = $dbh->query($sqlQuery);
 
+if ($result->rowCount() < 1) {
+    echo "<h2>No results found.</h2>";
+}
+
 if (is_array($result) || is_object($result)) {
     foreach ($result as $row) {
-        echo "<h2>The total amount donated to ".$row[1]." in 2018 was $".$row[0]."</h2>";
+        echo "<h2>The total amount donated to <resultValue>".$row[1]."</resultValue> in 2018 was <resultValue>$".$row[0]."</resultValue></h2>";
     }
 }
 
