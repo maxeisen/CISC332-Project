@@ -10,8 +10,6 @@
 
 <h1>Query 3: Donations</h1>
 
-<table>
-
 <?php
 
 $hostname="localhost";
@@ -21,20 +19,28 @@ $password="";
 
 $dbh = new PDO("mysql:host=$hostname;dbname=$db", $username, $password); 
 
+$rescueOrganizationID=$_POST["rescueOrganizationID"];
+
+$sqlQuery="SELECT SUM(valueDonated), organizationName FROM donatesTo JOIN organization WHERE orgPhoneNumber = $rescueOrganizationID AND orgPhoneNumber = phoneNumber AND year(dateDonated) = 2018 group by orgPhoneNumber";
 
 #Show the total amount donated for 2018 to a selected organization
-$rows = $dbh->query("");
+$result = $dbh->query($sqlQuery);
 
-echo "<h2>2018 Donations</h2>";
-
-foreach ($rows as $row) {
-	echo "<tr><td>".$row[0]."</td></tr>";
+if (is_array($result) || is_object($result)) {
+    foreach ($result as $row) {
+        echo "<h2>The total amount donated to ".$row[1]." in 2018 was $".$row[0]."</h2>";
+    }
 }
+
 $dbh = null
 
 ?>
 
-</table>
+<br>
+
+<a href="/cisc332-project">
+    <button>Back</button>
+</a>
 
 </body>
 </html> 
