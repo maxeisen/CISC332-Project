@@ -1,5 +1,5 @@
 # CISC 332 Final Group Project Implementation
-## Created by Max Eisen, Andrew Brown, and Henry Mason
+###### Created by Max Eisen, Andrew Brown, and Henry Mason
 
 This is the implementation/demo part of the final group project for CISC 332 - Database Management Systems W20.
 
