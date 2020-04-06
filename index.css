@@ -1,6 +1,7 @@
 h1 {
-font-family: sans-serif;
-color: #0f32bd;
+    text-align: center;
+    font-family: sans-serif;
+    color: #080f2e;
 }
 
 h2 {
@@ -37,32 +38,40 @@ r:nth-child(even) {
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    background-color: #2196F3;
+    background-color: rgb(101, 181, 247);
     padding: 10px;
 }
 
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    border: 0.5px solid rgba(0, 0, 0, 0.8);
     padding: 20px;
     font-size: 15px;
     text-align: center;
 }
 
-input[type=button], input[type=submit], input[type=reset], button {
+input[type=submit], button {
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
     background-color: #4CAF50;
-    border: 1px solid black;
+    border-radius: 30px;
     color: white;
     padding: 8px 16px;
-    text-decoration: none;
     margin: 4px 2px;
     cursor: pointer;
+    transition-duration: 0.4s;
 }
+
+input[type=submit]:hover, button:hover {
+    background-color: rgb(31, 129, 34);
+  }
 
 input[type=text] {
     width: 100px;
     height: 20px;
     font-size: 15px;
+    border-radius: 5px;
 }
 
 img {
