@@ -1,3 +1,6 @@
+-- These are just the *rough* queries for our functional requirements (plus one more). They should not be marked or copied into the query box, as they were changed for the final implementation
+
+
 -- Q1: show all the information for all drivers associated with a particular rescue organization
 
 SELECT *

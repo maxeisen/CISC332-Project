@@ -4,9 +4,11 @@
 <head>
 <link href="index.css" rel="stylesheet">
 </head>
+<div id="background">
 <body>
 
 <h1>Welcome to MAH Animal Services</h1>
+<br>
 
 <div class="grid-container">
 	<div class="grid-item">
@@ -24,10 +26,16 @@
 	<div class="grid-item">
 		<h2>Show which organizations a particular donor donated to and the total amount donated to each</h2>
 		<form action="query2.php" method="post">
-			<h3>First Name:</h3>
-			<input type="text" placeholder="e.g. Mister" name="firstName">
-			<h3>Last Name:</h3>
-			<input type="text" placeholder="e.g. Donair" name="lastName">
+			<div style="">
+				<div class="divLeft">
+					<h3 style="margin-top: 0px">First Name:</h3>
+					<input type="text" placeholder="e.g. Mister" name="firstName">
+				</div>
+				<div class="divRight">
+					<h3 style="margin-top: 0px">Last Name:</h3>
+					<input type="text" placeholder="e.g. Donair" name="lastName">
+				</div>
+			</div>
 			<br>
 			<br>
 			<input type="submit" value="View">
@@ -65,7 +73,9 @@
 
 </div>
 
-<p>Copyright &copy; 2020 MAH Animal Services for CISC 332</p>
+<br>
+<p> Made with &hearts; by <a href="https://github.com/maxeisen/cisc332-project">MAH Animal Services</a> for CISC 332</p>
 
 </body>
+</div>
 </html> 
