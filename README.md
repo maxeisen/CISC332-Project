@@ -19,7 +19,7 @@ if the result of any query is empty.
 ## Instructions
 
 1. Download and install [XAMPP](https://www.apachefriends.org/download.html "Download XAMPP")
-2. Navigate to, and clone "cisc332-project" repository into *htdocs* folder
+2. Navigate to /XAMPP/*htdocs* folder, and clone "cisc332-project" repository into it
 3. Start XAMPP *MySQL Database* and *Apache Web Server*
 4. Create a new database called *MAHAnimalServices*
 5. Copy text contained in *MAHAnimalServices_DDL.txt* into the SQL query box
