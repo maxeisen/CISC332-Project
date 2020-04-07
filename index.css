@@ -53,13 +53,6 @@ r:nth-child(even) {
 	background-color: #ababab;
 }
 
-.guineaPig{
-    margin: auto;
-    width: 13%;
-    border: #4CAF50;
-    border: 3px;
-}
-
 .grid-container {
     margin-left: auto;
     margin-right: auto;
@@ -121,8 +114,8 @@ input[type=text] {
   }
 
 img {
-    width: 200px;
-    border-radius: 30px;
+    width: 40px;
+    border-radius: 10px;
 }
 
 a:link, a:visited {
