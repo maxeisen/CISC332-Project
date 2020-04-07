@@ -1,6 +1,6 @@
 body {
     height: 100%;
-    background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(0, 81, 255, 0.25));
+    background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(0, 81, 255, 0.3));
     background-repeat: no-repeat;
     opacity: 0.9;
 }
@@ -56,6 +56,7 @@ r:nth-child(even) {
 .grid-container {
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
     display: grid;
     width: 90%;
     grid-template-columns: auto auto;
@@ -65,7 +66,9 @@ r:nth-child(even) {
 
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
-    border: 0.5px solid #00b7ff;
+    border: 3px solid #00b7ff;
+    border-radius: 10px;
+    opacity: 0.9;
     padding: 5px 30px 5px 30px;
     font-size: 15px;
     text-align: center;
