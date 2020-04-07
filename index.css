@@ -118,6 +118,12 @@ img {
     border-radius: 10px;
 }
 
+img:hover {
+    width: 400px;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+}
+
 a:link, a:visited {
     color: #0044ff;
     text-decoration: none;
